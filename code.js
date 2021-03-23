@@ -24,7 +24,7 @@ app.get("/", function(request, response){
     response.sendFile(__dirname * "/public/index.html")
 })
 
-// İnsert Table Links
+// Insert Table Links
 app.post("/api/create-short-url",function(request,response){
     let uniqueID = Math.random().toString(36).replace(/[^a-z0-9]/gi,'').substring(2.10);
     let sqlQuery = `INSERT INTO links(longurl,shorturlid) VALUES('${request.body.longurl}','${uniqueID}')`
@@ -59,6 +59,7 @@ app.get("/api/get-all-short-urls",function(request,response){
     })
 })
 
+// ShortURL redirect
 app.get("/:shorturlid", function(request,response){
     let shorturlid = request.params.shorturlid;
     let sql = `SELECT * FROM links WHERE shorturlid = '${shorturlid}' LIMIT 1`;
