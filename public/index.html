@@ -104,16 +104,14 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>http://google.com</td>
-                    <td>http://localhost:5000/jfdig</td>
-                    <td>545</td>
-                </tr>
+                <!-- data insert -->
             </tbody>
         </table>
     </div>
 
     <script>
+        const host = "http://localhost:5000/";
+
         document.querySelector("#create-short-url").addEventListener("click", function(){
             let longurl = document.querySelector("#longurl").value.trim()
             if(longurl.length == 0){
@@ -123,7 +121,7 @@
                 alert("Enter valid link")
                 return;
              }
-            fetch("http://localhost:5000/api/create-short-url", {
+            fetch(host + "api/create-short-url", {
                 method : "POST",
                 body : JSON.stringify({
                     longurl: longurl
@@ -134,11 +132,60 @@
             }).then(function(response){
                 return response.json();
             }).then(function(data){
-                console.log(data)
+                if(data.status == "ok"){
+                    console.log(data)
+                    document.querySelector("#short-url").innerText = host + data.shorturlid;
+                    document.querySelector("#short-url").href = host + data.shorturlid;
+                    
+                     
+                }
             }).catch(function(error){
-                alert("Veri gelmedi.")
+                alert("Post işlemi başarısız")
+            })
+        });
+
+        document.addEventListener("DOMContentLoaded" , (event) => {
+            fetch(host + "api/get-all-short-urls").then(function(response){
+                return response.json();
+            }).then(function(data){
+                let html = "";
+                for(let i=0; i<data.length; i++){
+                    html += `
+                    <tr>
+                        <td>${data[i].longurl}</td>
+                        <td>${host}${data[i].shorturlid}</td>
+                        <td>${data[i].count}</td>
+                     </tr>
+                    `;
+                }
+                document.querySelector("#list_urls tbody").innerHTML = html;
+            }).catch(function(error){
+                alert("Hata oluştu!")
             })
         })
+
+
+        // (function(){
+        //     fetch(host + "api/get-all-short-urls").then(function(response){
+        //         return response.json();
+        //     }).then(function(data){
+        //         let html = "";
+        //         for(let i=0; i<data.length; i++){
+        //             html += `
+        //             <tr>
+        //                 <td>${data[i].longurl}</td>
+        //                 <td>${host}${data[i].shorturlid}</td>
+        //                 <td>${data[i].count}</td>
+        //              </tr>
+        //             `;
+        //         }
+        //         document.querySelector("#list_urls tbody").innerHTML = html;
+        //     }).catch(function(error){
+        //         alert("Hata oluştu!")
+        //     })
+        // })
+
+
     </script>
 </body>
 </html>

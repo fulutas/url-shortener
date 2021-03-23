@@ -46,8 +46,8 @@ app.post("/api/create-short-url",function(request,response){
 
 // Get Table Links Rows;
 app.get("/api/get-all-short-urls",function(request,response){
-    let sqlQuery = `SELECT * FROM links`;
-    con.query(sqlQuery,function(error,result){
+    let sql = `SELECT * FROM links`;
+    con.query(sql,function(error,result){
         if(error){
             response.status(500).json({
                 status : "no",
