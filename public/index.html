@@ -133,11 +133,16 @@
                 return response.json();
             }).then(function(data){
                 if(data.status == "ok"){
-                    console.log(data)
                     document.querySelector("#short-url").innerText = host + data.shorturlid;
                     document.querySelector("#short-url").href = host + data.shorturlid;
-                    
-                     
+                    let html = `
+                    <tr>
+                        <td>${longurl}</td>
+                        <td>${host}${data.shorturlid}</td>
+                        <td>${0}</td>
+                     </tr>
+                    `;
+                    document.querySelector("#list_urls tbody").innerHTML += html;
                 }
             }).catch(function(error){
                 alert("Post işlemi başarısız")
