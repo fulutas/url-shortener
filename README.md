@@ -4,11 +4,15 @@
 Node.JS - Express JS
 MYSQL
 
+# Package Install
+npm install
+
 # Node Run
 node code.js
 
 # Database Connect MYSQL CLI
-connect shortulrs
+1) mysql -h localhost -u root -p
+2) connect shortulrs
 
 # Table View
 desc links;
